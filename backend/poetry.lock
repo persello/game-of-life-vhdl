@@ -1,0 +1,32 @@
+[[package]]
+name = "colorama"
+version = "0.4.4"
+description = "Cross-platform colored terminal text."
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[[package]]
+name = "vunit-hdl"
+version = "4.6.0"
+description = "VUnit is an open source unit testing framework for VHDL/SystemVerilog."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+colorama = "*"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.9"
+content-hash = "3020d132d3c7f9b76dc31d97c3c53a09a26a01bcbdb0f69dd3a6e1aa258a1377"
+
+[metadata.files]
+colorama = [
+    {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
+    {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
+]
+vunit-hdl = [
+    {file = "vunit_hdl-4.6.0.tar.gz", hash = "sha256:b405a97b5da4c26c99d8c726f38594c9173c0ac3f8a0832431c8e4920d2cacdf"},
+]
