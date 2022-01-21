@@ -48,6 +48,8 @@ BEGIN
     BEGIN
         test_runner_setup(runner, runner_cfg);
         WHILE test_suite LOOP
+
+            -- This test just prints the evolution of a glider to the output.
             IF run("test_glider") THEN
 
                 -- Load a glider
