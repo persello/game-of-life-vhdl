@@ -8,9 +8,11 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = {extras = ["all"], version = "^0.72.0"}
+ptyprocess = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
 vunit-hdl = "^4.6.0"
+black = {version = "^21.12b0", allow-prereleases = true}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

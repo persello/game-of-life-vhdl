@@ -1,2 +1,7 @@
 vunit_out/
 .venv/
+VCD/
+WORK/
+*.cf
+*.vcd
+**/__pycache__/
