@@ -25,7 +25,7 @@ analysis: clean
 	$(GHDL) -a $(GHDLFLAGS) $(ENTDIR)/$(MAIN).vhdl
 
 clean: prepare
-	@rm -f $(WORKDIR)/*.cf $(VCDDIR)/*.vcd *.cf *.vcd
+	@rm -f *.cf *.vcd
 
 prepare: force
 
