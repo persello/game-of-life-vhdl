@@ -35,6 +35,6 @@
 		height: 80vh;
 		width: 100%;
 		border-collapse: separate;
-		border-spacing: 0.2rem;
+		border-spacing: 2px;
 	}
 </style>

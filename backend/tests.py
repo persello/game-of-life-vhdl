@@ -16,7 +16,7 @@ VU.enable_location_preprocessing()
 
 # Entities library
 src_lib = VU.add_library("src_lib")
-src_lib.add_source_files([ENTITIES_PATH / "*.vhdl"])
+src_lib.add_source_files([ENTITIES_PATH / "cell.vhdl", ENTITIES_PATH / "ones_counter.vhdl", ENTITIES_PATH / "world.vhdl"])
 
 # # Matrix type library
 # mat_lib = VU.add_library("mat_lib")
@@ -24,6 +24,6 @@ src_lib.add_source_files([ENTITIES_PATH / "*.vhdl"])
 
 # Testbenches library
 tb_lib = VU.add_library("tb_lib")
-tb_lib.add_source_files([TESTBENCHES_PATH / "*.vhdl"])
+tb_lib.add_source_files([TESTBENCHES_PATH / "cell_tb.vhdl", TESTBENCHES_PATH / "ones_counter_tb.vhdl", TESTBENCHES_PATH / "world_tb.vhdl"])
 
 VU.main()

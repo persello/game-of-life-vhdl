@@ -9,10 +9,14 @@
 	let size = ServiceVHDLBackend.boardSize().then((size) => {
 		let result: [number, number] = [parseInt(size[0]), parseInt(size[1])];
 		return result;
+	}).catch((err) => {
+		console.log({"error": err});
+		return [0, 0];
 	});
 
-	let board_state = ServiceVHDLBackend.getBoardState().then((board_state) => {
-		return board_state;
+	let board_state = ServiceVHDLBackend.getBoardState().catch((err) => {
+		console.log({"error": err});
+		return [];
 	});
 
 	let autoPlay: boolean = false;

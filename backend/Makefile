@@ -4,14 +4,14 @@ VCDDIR=VCD
 MAIN=world_tb_interactive
 #
 GHDL=ghdl
-GHDLFLAGS=--ieee=synopsys --std=08
+GHDLFLAGS=--std=08
 GHDLRUNFLAGS=--vcd=$(MAIN).vcd
 LIB_NAME=src_lib
 
 all: run
 
 run: elaboration
-	$(GHDL) -c $(GHDLFLAGS) -r $(MAIN) $(GHDLRUNFLAGS)
+	$(GHDL) -r $(MAIN) $(GHDLRUNFLAGS)
 	mv $(MAIN).vcd $(VCDDIR)
 	mv *.cf $(WORKDIR)
 
