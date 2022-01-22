@@ -1,33 +1,60 @@
 {
 	"openapi": "3.0.2",
 	"info": { "title": "FastAPI", "version": "0.1.0" },
+	"servers": [
+		{
+			"url": "http://localhost:8000/",
+			"description": "Development server"
+		}
+	],
 	"paths": {
 		"/board-size": {
 			"get": {
-				"summary": "Board Size",
-				"operationId": "board_size_board_size_get",
+				"summary": "Get the board size.",
+				"description": "Returns the board size as a tuple of ints.",
+				"operationId": "board_size",
 				"responses": {
 					"200": {
 						"description": "Successful Response",
-						"content": { "application/json": { "schema": {} } }
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "Response Board Size Board Size Get",
+									"type": "array",
+									"minItems": 2,
+									"maxItems": 2,
+									"items": [{ "type": "integer" }, { "type": "integer" }]
+								}
+							}
+						}
 					}
 				}
 			}
 		},
 		"/state": {
 			"get": {
-				"summary": "Next State",
-				"operationId": "next_state_state_get",
+				"summary": "Get the current board state.",
+				"description": "Returns the current board state as a list of lists of bools.",
+				"operationId": "get_board_state",
 				"responses": {
 					"200": {
 						"description": "Successful Response",
-						"content": { "application/json": { "schema": {} } }
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "Response Get Board State State Get",
+									"type": "array",
+									"items": { "type": "array", "items": { "type": "boolean" } }
+								}
+							}
+						}
 					}
 				}
 			},
 			"post": {
-				"summary": "Set State",
-				"operationId": "set_state_state_post",
+				"summary": "Set the current board state.",
+				"description": "Sets the current board state as a list of lists of bools.",
+				"operationId": "set_board_state",
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -43,13 +70,42 @@
 				"responses": {
 					"200": {
 						"description": "Successful Response",
-						"content": { "application/json": { "schema": {} } }
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "Response Set Board State State Post",
+									"type": "array",
+									"items": { "type": "array", "items": { "type": "boolean" } }
+								}
+							}
+						}
 					},
 					"422": {
 						"description": "Validation Error",
 						"content": {
 							"application/json": {
 								"schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+							}
+						}
+					}
+				}
+			}
+		},
+		"/step": {
+			"post": {
+				"summary": "Step the simulation.",
+				"description": "Steps the simulation.",
+				"operationId": "step",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"title": "Response Step Step Post",
+									"type": "array",
+									"items": { "type": "array", "items": { "type": "boolean" } }
+								}
 							}
 						}
 					}

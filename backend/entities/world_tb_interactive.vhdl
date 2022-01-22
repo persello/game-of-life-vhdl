@@ -16,8 +16,8 @@ ARCHITECTURE bench OF world_tb_interactive IS
     CONSTANT clk_period : TIME    := 5 ns;
 
     -- Generics
-    CONSTANT size_x     : INTEGER := 10;
-    CONSTANT size_y     : INTEGER := 10;
+    CONSTANT size_x     : INTEGER := 40;
+    CONSTANT size_y     : INTEGER := 20;
 
     -- Ports
     SIGNAL clk          : STD_LOGIC;
@@ -47,14 +47,15 @@ BEGIN
     BEGIN
 
         -- Print ready message
-        write(l, string'("READY"));
+        write(l, STRING'("READY"));
         writeline(output, l);
 
         WHILE TRUE LOOP
             -- Read from stdin.
             -- The first character tells the command.
             --   'l' = load, followed by a 2D array of zeros and ones.
-            --   's' = step, prints the current world.
+            --   's' = step.
+            --   'p' = print the current world.
             --   'x' = get the width of the world.
             --   'y' = get the height of the world.
             readline(input, l);
@@ -65,38 +66,55 @@ BEGIN
                 writeline(output, l);
 
                 -- Load the world.
-                FOR i IN 0 TO size_x - 1 LOOP
+                FOR i IN 0 TO size_y - 1 LOOP
                     readline(input, l);
-                    FOR j IN 0 TO size_y - 1 LOOP
-                        world_input(i, j) <= '1' WHEN l(j + 1) = '1' ELSE
+                    FOR j IN 0 TO size_x - 1 LOOP
+                        world_input(j, i) <= '1' WHEN l(j + 1) = '1' ELSE
                         '0';
                     END LOOP;
                 END LOOP;
 
-                WAIT FOR clk_period / 2;
+                -- Load signal.
+                WAIT FOR clk_period;
                 load <= '1';
-                WAIT FOR clk_period / 2;
+                WAIT FOR clk_period;
                 load <= '0';
 
+                -- Print terminator.
                 write(l, '*');
                 writeline(output, l);
+
             ELSIF l.ALL = "s" THEN
                 -- Confirm command.
                 writeline(output, l);
-
-                -- Print the world.
-                FOR i IN 0 TO size_x - 1 LOOP
-                    FOR j IN 0 TO size_y - 1 LOOP
-                        write(l, world_output(i, j));
-                    END LOOP;
-                    writeline(output, l);
-                END LOOP;
 
                 -- Step the world.
                 WAIT FOR clk_period / 2;
                 clk <= '1';
                 WAIT FOR clk_period / 2;
                 clk <= '0';
+
+                -- Print terminator.
+                write(l, '*');
+                writeline(output, l);
+
+            ELSIF l.ALL = "p" THEN
+
+                -- Confirm command.
+                writeline(output, l);
+
+                -- Print the world.
+                FOR i IN 0 TO size_y - 1 LOOP
+                    FOR j IN 0 TO size_x - 1 LOOP
+                        write(l, world_output(j, i));
+                    END LOOP;
+                    writeline(output, l);
+                END LOOP;
+
+                -- Print terminator.
+                write(l, '*');
+                writeline(output, l);
+
             ELSIF l.ALL = "x" THEN
                 -- Confirm command.
                 writeline(output, l);
@@ -104,12 +122,21 @@ BEGIN
                 -- Print the width.
                 write(l, size_x);
                 writeline(output, l);
+
+                -- Print terminator.
+                write(l, '*');
+                writeline(output, l);
+
             ELSIF l.ALL = "y" THEN
                 -- Confirm command.
                 writeline(output, l);
 
                 -- Print the height.
                 write(l, size_y);
+                writeline(output, l);
+
+                -- Print terminator.
+                write(l, '*');
                 writeline(output, l);
 
             ELSE
@@ -119,13 +146,4 @@ BEGIN
             END IF;
         END LOOP;
     END PROCESS;
-
-    -- tb_clock_generator : PROCESS
-    -- BEGIN
-    --     -- Clock generation.
-    --     tb_clock <= '0';
-    --     WAIT FOR clk_period;
-    --     tb_clock <= '1';
-    --     WAIT FOR clk_period;
-    -- END PROCESS;
 END;

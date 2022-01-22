@@ -17,7 +17,7 @@ class VHDLBackend:
         # Clear and print the output until the backend prints "READY".
         while True:
             line = self.process.readline()
-            print(f"VHDLBackend: {line.strip()}")
+            print(f"VHDLBackend: [init] {line.strip()}")
             if line.startswith("READY"):
                 break
 
@@ -26,56 +26,81 @@ class VHDLBackend:
     def __del__(self):
         self.process.close()
 
+    def _command(self, command: str, arguments: List[str] = []) -> List[str]:
+        """
+        Sends a command to the backend.
+        """
+
+        # Build the command string.
+        self.process.write(command + "\n")
+        print(f"VHDLBackend: [send] {command}")
+
+        # Check command confirmation.
+        assert self.process.readline().startswith(command)
+
+        # Send the arguments.
+        for argument in arguments:
+            self.process.write(f"{argument}\n")
+            print(f"VHDLBackend: [send] {argument}")
+
+        # Empty list.
+        output = []
+
+        # Read the output.
+        while True:
+            line = self.process.readline().strip()
+            if line.endswith("*"):
+                break
+            print(f"VHDLBackend: [recv] {line}")
+            output.append(line)
+
+        return output
+
     def get_board_size(self) -> Tuple[int, int]:
         """
         Returns the board size as a tuple of ints.
         """
 
-        # Send an 'x' to the process to get the horizontal board size.
-        self.process.write("x\n")
+        # Send x to get the x-size.
+        x = int(self._command("x")[0])
 
-        # Get the last output line.
-        assert(self.process.readline().startswith("x"))
-        x = int(self.process.readline().strip())
-
-        # Send an 'y' to the process to get the vertical board size.
-        self.process.write("y\n")
-
-        # Get the last output line.
-        assert(self.process.readline().startswith("y"))
-        y = int(self.process.readline().strip())
+        # Send y to get the y-size.
+        y = int(self._command("y")[0])
 
         return x, y
 
-    def get_next_board_state(self) -> List[List[bool]]:
+    def get_board_state(self) -> List[List[bool]]:
         """
         Returns the current board state as a list of lists of bools.
         """
 
-        # Send an 's' to the process to get the board state.
-        self.process.write("s\n")
+        # Send s to get the board state.
+        board_state = self._command("p")
 
-        # Empty state.
-        board_state = []
+        # Convert the board state to a list of lists of bools.
+        result: List[List[bool]] = []
+        for line in board_state:
+            result.append(list(map(lambda x: True if x == "1" else False, line)))
 
-        # Check command confirmation.
-        assert self.process.readline().startswith("s")
-        
-        # Read the board state.
-        for _ in range(self.board_size[1]):
-            line = self.process.readline().strip()
-            board_state.append(list(map(lambda x: x == "1", line)))
-
-        return board_state
+        return result
 
     def set_board_state(self, board_state: List[List[bool]]):
         """
         Sets the current board state to the given board state.
         """
 
-        # Build the command string.
-        command = "l\n"
+        # Convert the board state to a list of lists of ints.
+        command_lines = []
         for line in board_state:
-            command += "".join(map(lambda x: "1" if x else "0", line)) + "\n"
+            command_lines.append("".join(map(lambda x: "1" if x else "0", line)))
 
-        self.process.write(command)
+        # Send the board state.
+        self._command("l", command_lines)
+
+    def step(self):
+        """
+        Steps the simulation.
+        """
+
+        # Send the step command.
+        self._command("s")

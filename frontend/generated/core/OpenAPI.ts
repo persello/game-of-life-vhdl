@@ -19,7 +19,7 @@ type Config = {
 }
 
 export const OpenAPI: Config = {
-    BASE: '',
+    BASE: 'http://localhost:8000',
     VERSION: '0.1.0',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',

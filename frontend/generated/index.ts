@@ -8,4 +8,4 @@ export { OpenAPI } from './core/OpenAPI';
 export type { HTTPValidationError } from './models/HTTPValidationError';
 export type { ValidationError } from './models/ValidationError';
 
-export { ServiceService } from './services/ServiceService';
+export { ServiceVHDLBackend } from './services/ServiceVHDLBackend';
