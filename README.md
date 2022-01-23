@@ -13,6 +13,7 @@ Arguments:
 - Object oriented programming
   - Python (backend API and tests)
   - TypeScript
+  - Code generation
 - UNIX shell
   - Interaction with a process through piped stdin and stdout
   - Makefile
