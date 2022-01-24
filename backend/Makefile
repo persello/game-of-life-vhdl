@@ -26,6 +26,7 @@ analysis: clean
 
 clean: prepare
 	@rm -f *.cf *.vcd
+	@rm -rf vunit_out/
 
 prepare: force
 

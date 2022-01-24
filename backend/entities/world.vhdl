@@ -55,12 +55,9 @@ BEGIN
                 clk       => clk,
                 set       => load AND input(i, j),
                 rst       => load AND NOT input(i, j),
-                -- neighbors => status(i - 1, j - 1) & status(i, j - 1) & status(i + 1, j - 1) &
-                --              status(i - 1, j)     &                    status(i + 1, j)     &
-                --              status(i - 1, j + 1) & status(i, j + 1) & status(i + 1, j + 1),
                 neighbors => status(i - 1, j - 1) & status(i, j - 1) & status(i + 1, j - 1) &
-                status(i - 1, j) & status(i + 1, j) &
-                status(i - 1, j + 1) & status(i, j + 1) & status(i + 1, j + 1),
+                             status(i - 1, j)                        & status(i + 1, j) &
+                             status(i - 1, j + 1) & status(i, j + 1) & status(i + 1, j + 1),
                 output => status(i, j)
             );
 

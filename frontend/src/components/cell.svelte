@@ -1,6 +1,5 @@
 <script lang="ts">
 	import 'carbon-components-svelte/css/g100.css';
-	import {} from 'carbon-icons-svelte';
 
 	export let state: boolean = false;
 	export let stateDidChange: (state: boolean) => void = () => {};
